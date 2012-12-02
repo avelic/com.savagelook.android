@@ -1,6 +1,8 @@
 # com.savagelook.android
 
 A collection of Android helper classes and functions in Java.  
+Forked to add support for authenticated JSON url requests.
+
 
 ## Class List
 

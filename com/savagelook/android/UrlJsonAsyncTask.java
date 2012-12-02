@@ -21,6 +21,7 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
 	private static final int TIMEOUT_CONNECT = 0;
 	private static final int TIMEOUT_READ = 0;
 	private static final int RETRY_COUNT = 0;
+	private static final String AUTH_TOKEN = "";
 	private static final String JSON_SUCCESS = "success";
 	private static final String JSON_INFO = "info";
 	
@@ -33,6 +34,7 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
 	private int timeoutConnect;
 	private int timeoutRead;
 	private int retryCount;
+	private String authToken;
 	private String jsonSuccess;
 	private String jsonInfo;
 	
@@ -45,6 +47,7 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
 		this.timeoutConnect = TIMEOUT_CONNECT;
 		this.timeoutRead = TIMEOUT_READ;
 		this.retryCount = RETRY_COUNT;
+		this.authToken = AUTH_TOKEN;
 		this.jsonSuccess = JSON_SUCCESS;
 		this.jsonInfo = JSON_INFO;
 	} 
@@ -99,7 +102,7 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
 		try {
 		    	try {
 		    		json.put(this.jsonSuccess, false);
-		    		json = JsonHelper.getJsonObjectFromUrl(url, this.timeoutConnect, this.timeoutRead);
+		    		json = JsonHelper.getJsonObjectFromUrl(url, this.timeoutConnect, this.timeoutRead, this.authToken);
 		    	} catch (SocketTimeoutException e) {
 		    		if (retries-- > 0) {
 			    		json = queryUrlForJson(url);	
@@ -122,10 +125,11 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
 	    	return json;
 	}
 	
-	public void setConnectionParams(int timeoutConnect, int timeoutRead, int retryCount) {
+	public void setConnectionParams(int timeoutConnect, int timeoutRead, int retryCount, String authToken) {
 		this.timeoutConnect = timeoutConnect;
 		this.timeoutRead = timeoutRead;
 		this.retryCount = retryCount;
+		this.authToken = authToken;
 	}
 
 	public String getLoadingTitle() {
@@ -182,6 +186,14 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
 
 	public void setRetryCount(int retryCount) {
 		this.retryCount = retryCount;
+	}
+
+	public String getAuthToken() {
+		return authToken;
+	}
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
 	}
 
 	public String getJsonSuccess() {
